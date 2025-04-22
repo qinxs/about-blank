@@ -5,6 +5,12 @@
     <link rel="icon" href="data:," />
     <script>
       var { log, dir, table } = console;
+      const app = (url = './app.js') => {
+        import(url).then(module => {
+          Object.assign(window, module);
+          log(`[loaded]: ${url}`);
+        });
+      };
     </script>
   </head>
 
