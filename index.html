@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>userBlank</title>
-    <link rel="icon" href="data:," />
+    <link rel="icon" href="data:,">
     <script>
       var { log, dir, table } = console;
       
       const app = (url = './app.js') => {
         import(url).then(module => {
           Object.assign(window, module);
-          log(`[loaded]: ${url}`);
+          console.log(`[loaded]: ${url}`);
         });
-      };
+      }
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(e => console.log(e));
