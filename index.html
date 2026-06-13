@@ -5,12 +5,17 @@
     <link rel="icon" href="data:," />
     <script>
       var { log, dir, table } = console;
+      
       const app = (url = './app.js') => {
         import(url).then(module => {
           Object.assign(window, module);
           log(`[loaded]: ${url}`);
         });
       };
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(e => console.log(e));
+      }
     </script>
   </head>
 
