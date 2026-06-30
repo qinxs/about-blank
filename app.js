@@ -1,6 +1,7 @@
 // load js/css
 const M = {
   map: new Map(),
+  moduleMap: new Map(),
   js(url) {
     if (this.map.has(url)) return;
 
@@ -9,6 +10,17 @@ const M = {
       onload: () => (this.map.set(url, ele), log(`[loaded]: ${url}`)),
     });
     document.head.append(ele);
+  },
+  // use: const lodash = await M.jsm('https://cdn.jsdelivr.net/npm/lodash-es@4/+esm')
+  jsm(url) {
+    if (!this.moduleMap.has(url)) {
+      const promise = import(url).then(mod => {
+        log(`[loaded module]: ${url}`);
+        return mod;
+      });
+      this.moduleMap.set(url, promise);
+    }
+    return this.moduleMap.get(url);
   },
   css(url) {
     if (this.map.has(url)) return;
@@ -30,6 +42,7 @@ const M = {
   clear() {
     this.map.forEach(ele => ele.remove());
     this.map.clear();
+    this.moduleMap.clear();
   },
 }
 
