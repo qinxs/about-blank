@@ -11,7 +11,8 @@
       const app = (url = './app.js') => {
         import(url).then(module => {
           Object.assign(window, module);
-          console.log(`[loaded]: ${url}`);
+          let appJsUrl = new URL(url, location.href).href;
+          console.log(`[loaded]: ${appJsUrl}`);
         });
       }
 
